@@ -2,7 +2,6 @@ plugins {
     application
     kotlin("jvm") version "1.4.21"
     kotlin("plugin.spring") version "1.4.21"
-    id("com.justai.jaicf.jaicp-build-plugin") version "0.1.1"
 
     id("org.springframework.boot") version "2.4.4"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
@@ -13,11 +12,6 @@ version = "1.0.0"
 
 val jaicf = "1.2.4"
 val logback = "1.2.3"
-
-// Main class to run application on heroku. Either JaicpPollerKt, or JaicpServerKt. Will propagate to .jar main class.
-application {
-    mainClassName = "com.justai.jaicf.template.connections.JaicpServerKt"
-}
 
 repositories {
     mavenLocal()
@@ -51,14 +45,10 @@ tasks {
     }
     bootJar {
         archiveFileName.set("app.jar")
-        mainClass.set("com.justai.jaicf.spring.ApplicationKt")
+        mainClass.set("com.justai.jaicf.template.ApplicationKt")
     }
 }
 
 tasks.create("stage") {
     dependsOn("bootJar")
-}
-
-tasks.withType<com.justai.jaicf.plugins.jaicp.build.JaicpBuild> {
-    mainClassName.set(application.mainClassName)
 }
